@@ -22,6 +22,8 @@ jobs:
 
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
         uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
         
       - name: Cache node modules
         uses: actions/cache@v4
@@ -80,12 +82,14 @@ jobs:
 
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
         uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Cache node modules
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-v4fix-${{ hashFiles('**/package-lock.json') }} |
+          key: ${{ runner.os }}-node-v4fix-${{ hashFiles('backend/package-lock.json') }} |
             ${{ runner.os }}-node-
 
       - name: Install project dependencies 
@@ -188,9 +192,9 @@ jobs:
     - name: Build and push backend Docker image
       working-directory: ./quiz-app
       run: |
-        docker build . -t ${{ secrets.DOCKER_USERNAME }}/frontend-js
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
-        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-js    
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest ${{ secrets.DOCKER_USERNAME }}/frontend-js:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-js --all-tags
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
@@ -236,9 +240,10 @@ jobs:
     - name: Build and push backend Docker image
       working-directory: ./backend
       run: |
-        docker build . -t ${{ secrets.DOCKER_USERNAME }}/backend-api
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
-        docker push ${{ secrets.DOCKER_USERNAME }}/backend-api    
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/backend-api:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/backend-api:latest ${{ secrets.DOCKER_USERNAME }}/backend-api:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/backend-api --all-tags
+          
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
