@@ -73,15 +73,6 @@ jobs:
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
         uses: actions/setup-node@v4
 
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install project dependencies 
         working-directory: ./backend
         run: |
@@ -93,7 +84,7 @@ jobs:
         env:
           CI: true 
 
-              # Setup sonar-scanner
+              # Setup sonar-scan
       - name: Setup SonarQube
         uses: warchant/setup-sonar-scanner@v8
 
@@ -123,7 +114,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
-        continue-on-error: true # To make sure that SARIF upload gets called
+        continue-on-error: true # To make sure that SARIF upload called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
@@ -276,5 +267,3 @@ jobs:
         with:
           file: kubernetes-manifest/
           args: --severity-threshold=high
-
-          #here we go
