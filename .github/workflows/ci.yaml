@@ -82,7 +82,7 @@ jobs:
         env:
           CI: true 
 
-              # Setup sonar-scanne
+              # Setup sonar-scan
       - name: Setup SonarQube
         uses: warchant/setup-sonar-scanner@v8
 
