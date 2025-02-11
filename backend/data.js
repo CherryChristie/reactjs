@@ -12,7 +12,7 @@ module.exports = {
       question: "Who led the Israelites into the Promised Land?",
       option1: "Moses",
       option2: "Joshua",
-      option3: "Abraham",
+      option3: "Abrahm",
       option4: "Isaa",
       ans: 2,
     },
