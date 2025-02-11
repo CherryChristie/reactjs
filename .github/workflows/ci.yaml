@@ -265,3 +265,5 @@ jobs:
         with:
           file: kubernetes-manifest/
           args: --severity-threshold=high
+
+          #here we go
