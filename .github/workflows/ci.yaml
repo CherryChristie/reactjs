@@ -162,7 +162,7 @@ jobs:
 
   frontend-image:
     needs: frontend-security
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     permissions:
       contents: read 
       security-events: write 
@@ -170,6 +170,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    # testing
     - name: Build and push backend Docker image
       working-directory: ./quiz-app
       run: |
