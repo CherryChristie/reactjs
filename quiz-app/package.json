@@ -38,4 +38,22 @@
   "keywords": [],
   "author": "Ogochukwu Ozotta",
   "license": "ISC"
+  },
+  "name": "my-github-action",
+  "version": "1.0.0",
+  "description": "A GitHub Action using @actions/cache",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "cache"
+  ],
+  "author": "cherrychristie",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/cache": "^4.0.0"
+  }
 }
