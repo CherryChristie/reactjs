@@ -175,11 +175,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Build and push backend Docker image
+    - name: Build Docker image
       working-directory: ./quiz-app
       run: |
+        set -x
         docker build . -t ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest
+
+    - name: Tag Docker image
+      run: |
+        set -x
         docker tag ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest ${{ secrets.DOCKER_USERNAME }}/frontend-js:${{ github.sha }}
+
+    - name: Push Docker image
+      run: |
+        set -x
         docker push ${{ secrets.DOCKER_USERNAME }}/frontend-js --all-tags
 
     - name: Run Trivy vulnerability scanner
