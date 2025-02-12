@@ -175,21 +175,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Build Docker image
+    - name: Build and push backend Docker image
       working-directory: ./quiz-app
       run: |
-        set -x
-        docker build . -t ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest
-
-    - name: Tag Docker image
-      run: |
-        set -x
-        docker tag ${{ secrets.DOCKER_USERNAME }}/frontend-js:latest ${{ secrets.DOCKER_USERNAME }}/frontend-js:${{ github.sha }}
-
-    - name: Push Docker image
-      run: |
-        set -x
-        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-js --all-tags
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/frontend-js
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
+        docker push ${{ secrets.DOCKER_USERNAME }}/frontend-js
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
@@ -232,13 +223,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+   
     - name: Build and push backend Docker image
       working-directory: ./backend
       run: |
-        docker build . -t ${{ secrets.DOCKER_USERNAME }}/backend-api:latest
-        docker tag ${{ secrets.DOCKER_USERNAME }}/backend-api:latest ${{ secrets.DOCKER_USERNAME }}/backend-api:${{ github.sha }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/backend-api --all-tags
-          
+        docker build . -t ${{ secrets.DOCKER_USERNAME }}/backend-api
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
+        docker push ${{ secrets.DOCKER_USERNAME }}/backend-api
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
