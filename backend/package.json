@@ -26,22 +26,5 @@
     "eslint-plugin-react": "^7.34.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
-  },
-  "name": "my-github-action",
-  "version": "1.0.0",
-  "description": "A GitHub Action using @actions/cache",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "github",
-    "actions",
-    "cache"
-  ],
-  "author": "cherrychristie",
-  "license": "MIT",
-  "dependencies": {
-    "@actions/cache": "^4.0.0"
   }
 }

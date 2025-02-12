@@ -18,20 +18,13 @@ jobs:
         architecture: [x64]
     steps:
       - name: Check-out git repository  
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-        
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-v4fix-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+  
 
       - name: Install project dependencies 
         working-directory: ./quiz-app
@@ -78,19 +71,12 @@ jobs:
         architecture: [x64]
     steps:
       - name: Check-out git repository  
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: USE NODEJS ${{ matrix.node-version }} - ${{ matrix.architecture }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-v4fix-${{ hashFiles('backend/package-lock.json') }} |
-            ${{ runner.os }}-node-
 
       - name: Install project dependencies 
         working-directory: ./backend
@@ -187,7 +173,7 @@ jobs:
       security-events: write 
       actions: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     
     - name: Build and push backend Docker image
       working-directory: ./quiz-app
@@ -235,7 +221,7 @@ jobs:
       security-events: write 
       actions: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     
     - name: Build and push backend Docker image
       working-directory: ./backend
@@ -279,7 +265,7 @@ jobs:
     needs: [backend-security, frontend-security]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Run Snyk to check Kubernetes manifest file for issues
         uses: snyk/actions/iac@master
         env:
